@@ -33,13 +33,13 @@ public class App {
 
 				int width = scanner.nextInt();
 				int hight = scanner.nextInt();
-
+				System.out.println(width+":::"+hight);
 				canvasBean = new CanvasBean(width, hight);
 				createCanvas(canvasBean);
 				printShapes(canvasBean.getCanvasArrt());
 
 				getInput(canvasBean);
-			} if ("L".equalsIgnoreCase(type)) {
+			} else if ("L".equalsIgnoreCase(type)) {
 
 				int leftX = scanner.nextInt();
 				int leftY = scanner.nextInt();
@@ -47,9 +47,23 @@ public class App {
 				int rightY = scanner.nextInt();
 
 				CordinatesBean cordinatesBean = 
-						new CordinatesBean(type, leftX, rightX, leftY, rightY);
+						new CordinatesBean(leftX, rightX, leftY, rightY);
 
 				createLine(cordinatesBean, canvasBean);
+				printShapes(canvasBean.getCanvasArrt());
+				
+				getInput(canvasBean);
+			} else if ("R".equalsIgnoreCase(type)) {
+
+				int leftX = scanner.nextInt();
+				int leftY = scanner.nextInt();
+				int rightX = scanner.nextInt();
+				int rightY = scanner.nextInt();
+
+				CordinatesBean cordinatesBean = 
+						new CordinatesBean(leftX, rightX, leftY, rightY);
+
+				createQuadrilateral(cordinatesBean, canvasBean);
 				printShapes(canvasBean.getCanvasArrt());
 				
 				getInput(canvasBean);
@@ -66,7 +80,7 @@ public class App {
 	private static void createCanvas(final CanvasBean canvasBean) {
 
 		char[][] canvasArr = canvasBean.getCanvasArrt();
-
+		
 		Arrays.fill(canvasArr[0], '-');
 		Arrays.fill(canvasArr[canvasBean.getHight() + 1], '-');
 
@@ -74,7 +88,7 @@ public class App {
 
 		while (j < canvasBean.getHight() + 1) {
 			canvasArr[j][0] = '|';
-			canvasArr[j][canvasBean.getWidth() - 1] = '|';
+			canvasArr[j][canvasBean.getWidth()+1] = '|';
 
 			j++;
 		}
@@ -85,20 +99,23 @@ public class App {
 		
 		char[][] canvasArr = canvasBean.getCanvasArrt();
 		
-		int i = cordinatesBean.getLeftX();
-		int j = cordinatesBean.getLeftY();
+		int i = 0;
+		int j = 0;
 		
-		while(i<=cordinatesBean.getRightX() || j<=cordinatesBean.getRightY()) {
+		while(i<=(cordinatesBean.getRightX()-cordinatesBean.getLeftX()) 
+					|| j<=(cordinatesBean.getRightY()-cordinatesBean.getLeftY())) {
 			
-			if(i>cordinatesBean.getRightX()) {
-				i = cordinatesBean.getRightX();
-			}
 			
-			if(j>cordinatesBean.getRightY()) {
-				j = cordinatesBean.getRightY();
-			}
+			  if(cordinatesBean.getRightX() == cordinatesBean.getLeftX()) {
+				  i = 0; 
+				  }
+			  
+			  if(cordinatesBean.getRightY()==cordinatesBean.getLeftY()) {
+				  j = 0;
+				  }
+			 
 			
-			canvasArr[i][j] = 'x';
+			canvasArr[cordinatesBean.getLeftX()+i][cordinatesBean.getLeftY()+j] = 'x';
 			
 				i++;
 				j++;
@@ -111,22 +128,22 @@ private static void createQuadrilateral(CordinatesBean cordinatesBean, CanvasBea
 		
 		char[][] canvasArr = canvasBean.getCanvasArrt();
 		
-		int i = cordinatesBean.getLeftX();
-		int j = cordinatesBean.getLeftY();
+		int i = 0;
+		int j = 0;
 		
-		while(i<=cordinatesBean.getRightX() || j<=cordinatesBean.getRightY()) {
+		while(i<= (cordinatesBean.getRightX()-cordinatesBean.getLeftX())) {
 			
-			if(i>cordinatesBean.getRightX()) {
-				i = cordinatesBean.getRightX();
-			}
-			
-			if(j>cordinatesBean.getRightY()) {
-				j = cordinatesBean.getRightY();
-			}
-			
-			canvasArr[i][j] = 'x';
+			canvasArr[cordinatesBean.getLeftY()][cordinatesBean.getLeftX()+i] = 'x';
+			canvasArr[cordinatesBean.getRightY()][cordinatesBean.getLeftX()+i] = 'x';
 			
 				i++;
+		}
+		
+		while(j <= (cordinatesBean.getRightY()-cordinatesBean.getLeftY())) {
+			
+			canvasArr[cordinatesBean.getLeftY()+j][cordinatesBean.getLeftX()] = 'x';
+			canvasArr[cordinatesBean.getLeftY()+j][cordinatesBean.getRightX()] = 'x';
+			
 				j++;
 			
 		}

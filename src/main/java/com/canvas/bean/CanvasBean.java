@@ -10,7 +10,7 @@ public final class CanvasBean {
 		super();
 		this.width = width;
 		this.hight = hight;
-		canvasArrt = new char[hight+2][width];
+		canvasArrt = new char[hight+2][width+2];
 	}
 	public int getWidth() {
 		return width;
