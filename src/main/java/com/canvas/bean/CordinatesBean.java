@@ -16,16 +16,16 @@ public final class CordinatesBean {
 	}
 
 	public int getLeftX() {
-		return leftX + 1;
+		return leftX;
 	}
 	public int getRightX() {
-		return rightX + 1;
+		return rightX;
 	}
 	public int getLeftY() {
-		return leftY + 1;
+		return leftY;
 	}
 	public int getRightY() {
-		return rightY + 1;
+		return rightY;
 	}
 	
 }
